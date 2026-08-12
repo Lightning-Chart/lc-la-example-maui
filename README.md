@@ -4,7 +4,7 @@ This .NET MAUI example loads 1,000,000 historical samples and then streams 10,00
 
 ## Run
 
-1. Install the .NET 8 SDK and the .NET MAUI workload.
+1. Install the .NET 8 SDK or later and the matching .NET MAUI workload.
 2. Set a LightningChart JS license key:
 
    ```powershell
