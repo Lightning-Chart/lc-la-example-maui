@@ -11,10 +11,4 @@ This .NET MAUI example loads 1,000,000 historical samples and then streams 10,00
    $env:LCJS_LICENSE_KEY="your-license-key"
    ```
 
-3. Run the Windows target:
-
-   ```bash
-   dotnet build -t:Run -f net8.0-windows10.0.19041.0
-   ```
-
-Select an Android, iOS, or Mac Catalyst target in your IDE to run the same project there.
+3. Open `LightningChartMauiExample.csproj` in Visual Studio, select a target device or platform, and run the project.
