@@ -53,7 +53,6 @@ public sealed class MainPage : ContentPage, IAsyncDisposable
             var licenseKey = Environment.GetEnvironmentVariable("LCJS_LICENSE_KEY")
                 ?? throw new InvalidOperationException("Set LCJS_LICENSE_KEY before starting the example.");
             _context = new LclaContext(_transport, new LclaLicense { Key = licenseKey, AppTitle = "LightningChart MAUI Example" });
-            using var startupCancellation = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             _chart = await _context.CreateChartAsync(new XYChartConfig
             {
                 ContainerId = "lcla-root",
@@ -61,7 +60,7 @@ public sealed class MainPage : ContentPage, IAsyncDisposable
                 AnimationsEnabled = false,
                 DataSets = [new DataSetConfig { Id = "signal", MaxSampleCount = 2_000_000, Columns = [new DataSetColumnConfig { Id = "value" }] }],
                 Channels = [new ChannelConfig { Id = "value", DataSetId = "signal", Column = "value", Name = "Signal" }],
-            }, startupCancellation.Token);
+            });
 
             const int count = 1_000_000;
             var x = new double[count];
