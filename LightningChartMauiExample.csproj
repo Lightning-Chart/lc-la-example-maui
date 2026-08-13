@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst;net8.0-windows10.0.19041.0</TargetFrameworks>
+    <TargetFrameworks>net10.0-android;net10.0-ios;net10.0-maccatalyst;net10.0-windows10.0.19041.0</TargetFrameworks>
     <OutputType>Exe</OutputType>
     <RootNamespace>LightningChartMauiExample</RootNamespace>
     <UseMaui>true</UseMaui>
@@ -10,12 +10,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.100" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.90" />
   </ItemGroup>
+  <PropertyGroup>
+    <LclaSourceProject Condition="'$(LclaSourceProject)' == ''">..\..\packages\clients\csharp\LightningChart.LA\LightningChart.LA.csproj</LclaSourceProject>
+  </PropertyGroup>
   <ItemGroup Condition="'$(LclaUseLocalSource)' != 'true'">
-    <PackageReference Include="LCLA" Version="0.0.4" />
+    <PackageReference Include="LCLA" Version="0.0.5" />
   </ItemGroup>
   <ItemGroup Condition="'$(LclaUseLocalSource)' == 'true'">
-    <ProjectReference Include="..\..\packages\clients\csharp\LightningChart.LA\LightningChart.LA.csproj" />
+    <ProjectReference Include="$(LclaSourceProject)" />
   </ItemGroup>
 </Project>
