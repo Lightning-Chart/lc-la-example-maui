@@ -2,6 +2,8 @@
 
 This .NET MAUI 10 example opens in historical mode with 1,000,000 samples. Use the real-time control to start or stop 10,000-sample batches.
 
+Learn more: [LightningChart documentation](https://lightningchart.com/lc-la/docs/)
+
 ## Run
 
 1. Install the .NET 10 SDK and its MAUI workload:
