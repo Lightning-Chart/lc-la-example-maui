@@ -12,13 +12,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.90" />
   </ItemGroup>
-  <PropertyGroup>
-    <LclaSourceProject Condition="'$(LclaSourceProject)' == ''">..\..\packages\clients\csharp\LightningChart.LA\LightningChart.LA.csproj</LclaSourceProject>
-  </PropertyGroup>
-  <ItemGroup Condition="'$(LclaUseLocalSource)' != 'true'">
-    <PackageReference Include="LCLA" Version="0.0.9" />
+  <ItemGroup>
+    <PackageReference Include="LCLA" Version="0.0.10" />
   </ItemGroup>
-  <ItemGroup Condition="'$(LclaUseLocalSource)' == 'true'">
-    <ProjectReference Include="$(LclaSourceProject)" />
+  <ItemGroup>
+    <MauiAsset Include="Data\patient_10.csv" LogicalName="patient_10.csv" />
   </ItemGroup>
 </Project>

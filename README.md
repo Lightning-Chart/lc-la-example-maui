@@ -1,6 +1,6 @@
 # LightningChart for MAUI
 
-This .NET MAUI 10 example opens in historical mode with 1,000,000 samples. Use the real-time control to start or stop 10,000-sample batches.
+This .NET MAUI example displays patient vital signs from `examples/data/patient_10.csv`. The recording contains 1,800 samples and can be viewed as historical data or replayed using its timestamps.
 
 Learn more: [LightningChart documentation](https://lightningchart.com/lc-la/docs/)
 
@@ -20,7 +20,9 @@ Learn more: [LightningChart documentation](https://lightningchart.com/lc-la/docs
 3. Run the Windows example from that same PowerShell session:
 
    ```powershell
-   dotnet build .\LightningChartMauiExample.csproj -t:Run -f net10.0-windows10.0.19041.0 -p:LclaUseLocalSource=true
+   dotnet build .\LightningChartMauiExample.csproj -t:Run -f net10.0-windows10.0.19041.0
    ```
 
    You can also open `LightningChartMauiExample.csproj` in Visual Studio, select a target device or platform, and run the project from the same environment.
+
+4. The app initially displays the complete historical recording. Select **Start replay** to replay the measurements. Select **Pause replay**, then **Resume replay**, to pause and continue. Select **Load historical** to stop replay and display the complete recording.
