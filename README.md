@@ -4,7 +4,7 @@ This .NET MAUI example displays patient vital signs from `examples/data/patient_
 
 Learn more: [LightningChart documentation](https://lightningchart.com/lc-la/docs/)
 
-![MAUI example](/examples/maui/lcla_maui.png)
+![MAUI example](./images/lcla_maui.png)
 
 ## Run
 
