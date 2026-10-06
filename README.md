@@ -4,6 +4,8 @@ This .NET MAUI example displays patient vital signs from `examples/data/patient_
 
 Learn more: [LightningChart documentation](https://lightningchart.com/lc-la/docs/)
 
+![MAUI example](/examples/maui/lcla_maui.png)
+
 ## Run
 
 1. Install the .NET 10 SDK and its MAUI workload:
