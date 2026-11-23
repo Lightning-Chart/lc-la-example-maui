@@ -32,8 +32,9 @@ dotnet workload install maui
    $env:LCJS_LICENSE_KEY="your-license-key"
    ```
 
-3. Run the Windows example from that same PowerShell session:
+3. Build and run the Windows example from that same PowerShell session:
    ```powershell
+   dotnet build .\MauiVitalSigns.csproj -f net10.0-windows10.0.19041.0
    dotnet build .\MauiVitalSigns.csproj -t:Run -f net10.0-windows10.0.19041.0
    ```
 
