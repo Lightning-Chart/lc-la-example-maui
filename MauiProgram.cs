@@ -1,4 +1,4 @@
-namespace LightningChartMauiExample;
+namespace MauiVitalSigns;
 
 public static class MauiProgram
 {

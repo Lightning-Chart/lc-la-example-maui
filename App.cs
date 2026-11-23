@@ -1,6 +1,9 @@
-namespace LightningChartMauiExample;
+namespace MauiVitalSigns;
 
 public sealed class App : Application
 {
-    public App() => MainPage = new MainPage();
+        protected override Window CreateWindow(IActivationState? activationState)
+    {
+        return new Window(new MainPage());
+    }
 }

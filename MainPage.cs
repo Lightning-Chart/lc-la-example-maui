@@ -2,7 +2,7 @@ using System.Globalization;
 using LightningChart.LA.Api;
 using LightningChart.LA.WebView;
 
-namespace LightningChartMauiExample;
+namespace MauiVitalSigns;
 
 public sealed class MainPage : ContentPage, IAsyncDisposable
 {
@@ -195,10 +195,10 @@ public sealed class MainPage : ContentPage, IAsyncDisposable
                     new DataSetConfig
                     {
                         Id = DataSetId,
-                        XDataPattern = DataPattern.Progressive,
                         MaxSampleCount = _time.Length,
                         Columns =
                         [
+                            new DataSetColumnConfig { Id = "time", DataPattern = DataPattern.Progressive },
                             new DataSetColumnConfig { Id = "heart-rate" },
                             new DataSetColumnConfig { Id = "systolic" },
                             new DataSetColumnConfig { Id = "diastolic" },
@@ -207,13 +207,64 @@ public sealed class MainPage : ContentPage, IAsyncDisposable
                         ],
                     },
                 ],
-                Channels =
+                Axes =
                 [
-                    new ChannelConfig { Id = "heart-rate", DataSetId = DataSetId, Column = "heart-rate", Name = "Heart rate (bpm)", Color = "#F2C14E", StackIndex = 0 },
-                    new ChannelConfig { Id = "systolic", DataSetId = DataSetId, Column = "systolic", Name = "Systolic (mmHg)", Color = "#FF6B6B", StackIndex = -1 },
-                    new ChannelConfig { Id = "diastolic", DataSetId = DataSetId, Column = "diastolic", Name = "Diastolic (mmHg)", Color = "#F08A5D", StackIndex = -1 },
-                    new ChannelConfig { Id = "spo2", DataSetId = DataSetId, Column = "spo2", Name = "SpO₂ (%)", Color = "#B388FF", StackIndex = -2 },
-                    new ChannelConfig { Id = "respiratory-rate", DataSetId = DataSetId, Column = "respiratory-rate", Name = "Respiratory rate (/min)", Color = "#7BC96F", StackIndex = -3 },
+                    new AxisConfig { Axis = AxisTarget.Y, StackIndex = 0 },
+                    new AxisConfig { Id = "blood-pressure", Axis = AxisTarget.Y, StackIndex = -1 },
+                    new AxisConfig { Id = "spo2", Axis = AxisTarget.Y, StackIndex = -2 },
+                    new AxisConfig { Id = "respiratory-rate", Axis = AxisTarget.Y, StackIndex = -3 },
+                ],
+                Series =
+                [
+                    new LineSeriesConfig
+                    {
+                        Id = "heart-rate",
+                        DataSetId = DataSetId,
+                        X = "time",
+                        Y = "heart-rate",
+                        Name = "Heart rate (bpm)",
+                        Color = "#F2C14E",
+                    },
+                    new LineSeriesConfig
+                    {
+                        Id = "systolic",
+                        DataSetId = DataSetId,
+                        X = "time",
+                        Y = "systolic",
+                        YAxisId = "blood-pressure",
+                        Name = "Systolic (mmHg)",
+                        Color = "#FF6B6B",
+                    },
+                    new LineSeriesConfig
+                    {
+                        Id = "diastolic",
+                        DataSetId = DataSetId,
+                        X = "time",
+                        Y = "diastolic",
+                        YAxisId = "blood-pressure",
+                        Name = "Diastolic (mmHg)",
+                        Color = "#F08A5D",
+                    },
+                    new LineSeriesConfig
+                    {
+                        Id = "spo2",
+                        DataSetId = DataSetId,
+                        X = "time",
+                        Y = "spo2",
+                        YAxisId = "spo2",
+                        Name = "SpO₂ (%)",
+                        Color = "#B388FF",
+                    },
+                    new LineSeriesConfig
+                    {
+                        Id = "respiratory-rate",
+                        DataSetId = DataSetId,
+                        X = "time",
+                        Y = "respiratory-rate",
+                        YAxisId = "respiratory-rate",
+                        Name = "Respiratory rate (/min)",
+                        Color = "#7BC96F",
+                    },
                 ],
             });
 
@@ -232,14 +283,29 @@ public sealed class MainPage : ContentPage, IAsyncDisposable
 
         try
         {
-            _chart.SetScrollStrategy(new SetScrollStrategyOptions { AxisX = ScrollStrategy.Fitting });
-            _chart.SetData(new SetDataOptions { DataSetId = DataSetId, X = _time, Columns = _columns });
-
-            _chart.SetAxisInterval(new SetAxisIntervalOptions
+            _chart.SetData(new SetDataOptions
             {
-                Axis = AxisTarget.X,
-                Start = Math.Max(_time[0], _time[^1] - VisibleWindowSeconds),
-                End = _time[^1],
+                DataSetId = DataSetId,
+                Columns = new Dictionary<string, double[]>(_columns)
+                {
+                    ["time"] = _time,
+                },
+            });
+            _chart.Update(new UpdateXYChartConfig
+            {
+                Axes =
+                [
+                    new UpdateAxisConfig
+                    {
+                        Axis = AxisTarget.X,
+                        ScrollStrategy = ScrollStrategy.Fitting,
+                        Interval = new AxisIntervalConfig
+                        {
+                            Start = Math.Max(_time[0], _time[^1] - VisibleWindowSeconds),
+                            End = _time[^1],
+                        },
+                    },
+                ],
             });
 
             _streamIndex = _time.Length;
@@ -265,11 +331,20 @@ public sealed class MainPage : ContentPage, IAsyncDisposable
         if (_streamIndex >= _time.Length)
         {
             _chart.ClearData(new ClearDataOptions { DataSetId = DataSetId });
-            _chart.SetScrollStrategy(new SetScrollStrategyOptions { AxisX = ScrollStrategy.Scrolling });
-            _chart.SetDefaultAxisInterval(new SetDefaultAxisIntervalOptions
+            _chart.Update(new UpdateXYChartConfig
             {
-                Axis = AxisTarget.X,
-                Length = VisibleWindowSeconds,
+                Axes =
+                [
+                    new UpdateAxisConfig
+                    {
+                        Axis = AxisTarget.X,
+                        ScrollStrategy = ScrollStrategy.Scrolling,
+                        DefaultInterval = new AxisDefaultIntervalConfig
+                        {
+                            Length = VisibleWindowSeconds,
+                        },
+                    },
+                ],
             });
             _streamIndex = 0;
         }
@@ -316,9 +391,9 @@ public sealed class MainPage : ContentPage, IAsyncDisposable
                 _chart.AppendData(new AppendDataOptions
                 {
                     DataSetId = DataSetId,
-                    X = [_time[index]],
                     Columns = new Dictionary<string, double[]>
                     {
+                        ["time"] = [_time[index]],
                         ["heart-rate"] = [_columns["heart-rate"][index]],
                         ["systolic"] = [_columns["systolic"][index]],
                         ["diastolic"] = [_columns["diastolic"][index]],

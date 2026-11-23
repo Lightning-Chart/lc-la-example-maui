@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>net10.0-android;net10.0-ios;net10.0-maccatalyst;net10.0-windows10.0.19041.0</TargetFrameworks>
     <OutputType>Exe</OutputType>
-    <RootNamespace>LightningChartMauiExample</RootNamespace>
+    <RootNamespace>MauiVitalSigns</RootNamespace>
     <UseMaui>true</UseMaui>
     <SingleProject>true</SingleProject>
     <WindowsPackageType>None</WindowsPackageType>
@@ -13,7 +13,7 @@
     <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.90" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="LCLA" Version="0.0.10" />
+    <PackageReference Include="LCLA" Version="0.1.0" />
   </ItemGroup>
   <ItemGroup>
     <MauiAsset Include="Data\patient_10.csv" LogicalName="patient_10.csv" />

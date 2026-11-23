@@ -1,6 +1,6 @@
 using Foundation;
 
-namespace LightningChartMauiExample;
+namespace MauiVitalSigns;
 
 [Register("AppDelegate")]
 public sealed class AppDelegate : MauiUIApplicationDelegate
